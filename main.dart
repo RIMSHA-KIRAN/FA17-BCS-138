@@ -1,205 +1,280 @@
+
+
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'FA17-bcs-138',
-      home: MyHomePage(),
-      theme: _buildShrineTheme(),
-
+      title: 'FA17-BCS-138',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.menu),
-        title: Text('Overview'),
-        actions: [
-          Icon(Icons.add),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(Icons.search),
-          ),
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
 
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
+  GlobalKey<ScaffoldState> _key = GlobalKey();
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
+
+  Widget _icon(IconData icon, {Color color = Colors.blue}) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(13)),
+        color: Theme.of(context).backgroundColor,
+        //boxShadow: AppTheme.shadow
+      ),
+      child: InkWell(
+        onTap: () {
+          _key.currentState.openDrawer();
+        },
+        child: Icon(
+          icon,
+          color: color,
+        ),
+      ),
+    );
+  }
+
+  bool isHomePageSelected = true;
+  Widget _appBar() {
+    return Container(
+      //padding: AppTheme.padding,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          RotatedBox(
+            quarterTurns: 4,
+            child: _icon(Icons.menu, color: Colors.black54),
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(13)),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).backgroundColor,
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                      color: Color(0xfff8f8f8),
+                      blurRadius: 10,
+                      spreadRadius: 10),
+                ],
+              ),
+            ),
+          )
         ],
       ),
-body: Stack(
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _key,
+      appBar: AppBar(leading: _appBar()),
+      drawer: Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+
+
+        child: ListView(
+          // Important: Remove any padding from the ListView.
+          padding: EdgeInsets.zero,
           children: <Widget>[
 
 
-            Container(
+            DrawerHeader(
+
               child: Column(
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Day',
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 28,
-                            color: const Color(0xff0e0a0a),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          'week',
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 28,
-                            color: const Color(0xff0e0a0a),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Expanded(
-                        child: Text(
-                          'Month',
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 28,
-                            color: const Color(0xff130c0c),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
+                crossAxisAlignment: CrossAxisAlignment.center,
+
+
+                children: <Widget>[
+
+
+
+                  Text(
+                    'Add New',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,
+
                   ),
-                 Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.black26,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child:Text(
-                          'February',
-                          style: TextStyle(
-                            fontFamily: 'Segoe UI',
-                            fontSize: 28,
-                            color: const Color(0xff0e0a0a),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      Expanded(
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: Colors.black26,
-                        ),
-                      ),
 
 
-    ],
-    )
+                  ),
 
 
+                  SizedBox(
+                    width:200.0,
+                    height:25.0,
 
+                  ),
+
+
+                  Text(
+                    'Title',style: TextStyle(fontWeight: FontWeight.bold ,fontSize: 30.0,color: Colors.white
+                  ),
+                  ),
+                  SizedBox(
+                    width:400.0,
+                    height:20.0,
+
+                  ),
+                  Text(
+                    'Description',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.white,),
+
+                  ),
                 ],
-
               ),
 
+              decoration: BoxDecoration(
+                color: Colors.purpleAccent,
+              ),
 
             ),
 
+            ListTile(
+              title: Text('Select date                             march 18,2015'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+
+            ),
+            Divider(
+              color: Colors.white,
+              thickness:2.0,
+            ),
+
+            ListTile(
+              title: Text('Select time                        9:00am - 10:00am'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            Divider(
+              color: Colors.white,
+              thickness:2.0,
+            ),
+
+            ListTile(
+              title: Text('All Day'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+
+              },
+              leading: FloatingActionButton(
+                child:Icon(Icons.toggle_on),
+              ),
+            ),
+
+            Divider(
+              color: Colors.white,
+              thickness:2.0,
+            ),
+
+
+
+            ListTile(
+              title: Text('Location                                               None'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+
+            ),
+            Divider(
+              color: Colors.white,
+              thickness:2.0,
+            ),
+            ListTile(
+              title: Text('Notification                                       Via SMS'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            Divider(
+              color: Colors.white,
+              thickness:2.0,
+            ),
+            ListTile(
+              title: Text('People                                                  None'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            Divider(
+              color: Colors.white,
+              thickness:2.0,
+            ),
+            ListTile(
+              title: Text('Repeat                                                      No'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+
           ],
-
-
-
-    )
-
-
+        ),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
     );
-
   }
 }
-ThemeData _buildShrineTheme() {
-  final ThemeData base = ThemeData.light();
-  return base.copyWith(
-    colorScheme: _shrineColorScheme,
-    accentColor: shrineBrown900,
-    primaryColor: shrinePink100,
-    buttonColor: shrinePink100,
-    scaffoldBackgroundColor: shrineBackgroundWhite,
-    cardColor: shrineBackgroundWhite,
-    textSelectionColor: shrinePink100,
-    errorColor: shrineErrorRed,
-    buttonTheme: const ButtonThemeData(
-      colorScheme: _shrineColorScheme,
-      textTheme: ButtonTextTheme.normal,
-    ),
-    primaryIconTheme: _customIconTheme(base.iconTheme),
-    textTheme: _buildShrineTextTheme(base.textTheme),
-    primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
-    accentTextTheme: _buildShrineTextTheme(base.accentTextTheme),
-    iconTheme: _customIconTheme(base.iconTheme),
-  );
-}
-IconThemeData _customIconTheme(IconThemeData original) {
-  return original.copyWith(color: shrineBrown900);
-}
-
-TextTheme _buildShrineTextTheme(TextTheme base) {
-  return base
-      .copyWith(
-    caption: base.caption.copyWith(
-      fontWeight: FontWeight.w400,
-      fontSize: 14,
-      letterSpacing: defaultLetterSpacing,
-    ),
-    button: base.button.copyWith(
-      fontWeight: FontWeight.w500,
-      fontSize: 14,
-      letterSpacing: defaultLetterSpacing,
-    ),
-  )
-      .apply(
-    fontFamily: 'Rubik',
-    displayColor: shrineBrown900,
-    bodyColor: shrineBrown900,
-  );
-}
-
-const ColorScheme _shrineColorScheme = ColorScheme(
-  primary: shrinePink100,
-  primaryVariant: shrineBrown900,
-  secondary: shrinePink50,
-  secondaryVariant: shrineBrown900,
-  surface: shrineSurfaceWhite,
-  background: shrineBackgroundWhite,
-  error: shrineErrorRed,
-  onPrimary: shrineBrown900,
-  onSecondary: shrineBrown900,
-  onSurface: shrineBrown900,
-  onBackground: shrineBrown900,
-  onError: shrineSurfaceWhite,
-  brightness: Brightness.light,
-);
-
-const Color shrinePink50 = Color(0xcfb37a73);
-const Color shrinePink100 = Color(0xFFF5F2F3);
-const Color shrinePink300 = Color(0xFFFBB8AC);
-const Color shrinePink400 = Color(0xFFEAA4A4);
-
-const Color shrineBrown900 = Color(0xFF442B2D);
-const Color shrineBrown600 = Color(0xFF7D4F52);
-
-const Color shrineErrorRed = Color(0xFFC5032B);
-
-const Color shrineSurfaceWhite = Color(0xFFFFFBFA);
-const Color shrineBackgroundWhite = Colors.white;
-
-const defaultLetterSpacing = 0.03;
