@@ -4,3 +4,14 @@ i have added code of two components uisng flutter layouts
 #flutter Column wigdets
 
 #Jazakallah
+
+
+#Screen_2 code is completed and uloaded
+using different properties of flutter
+#container
+#RotateBox
+#BoxShadw
+#Row and Column Widgets
+
+
+#JAzakallah
