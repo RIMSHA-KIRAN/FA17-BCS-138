@@ -13,5 +13,5 @@ using different properties of flutter
 #BoxShadw
 #Row and Column Widgets
 
-
+Screen_3 code is uloaded but it is just for appbar
 #JAzakallah
